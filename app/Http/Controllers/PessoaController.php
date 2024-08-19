@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pessoa;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class PessoaController extends Controller
@@ -11,7 +13,7 @@ class PessoaController extends Controller
      */
     public function index()
     {
-        //
+        return Pessoa::paginate();
     }
 
     /**
@@ -27,7 +29,8 @@ class PessoaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pessoa = Pessoa::create($request->all());
+        return response()->json($pessoa, 201);
     }
 
     /**
@@ -35,7 +38,11 @@ class PessoaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            return Pessoa::findOrFail($id);
+        } catch (ModelNotFoundException $modelException) {
+            return response()->json(["error"=>true], 404);
+        }
     }
 
     /**
@@ -51,7 +58,9 @@ class PessoaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pessoa = Pessoa::findOrFail($id);
+        $pessoa->update($request->all());
+        return response()->json($pessoa, 200);
     }
 
     /**
@@ -59,6 +68,8 @@ class PessoaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pessoa = Pessoa::findOrFail($id);
+        $pessoa->delete();
+        return response()->json(null, 204);
     }
 }
