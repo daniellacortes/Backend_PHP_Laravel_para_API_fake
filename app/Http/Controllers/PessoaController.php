@@ -13,7 +13,7 @@ class PessoaController extends Controller
      */
     public function index()
     {
-        return Pessoa::paginate();
+        return Pessoa::paginate(50);
     }
 
     /**

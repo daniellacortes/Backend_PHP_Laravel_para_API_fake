@@ -18,7 +18,7 @@ class PessoaFactory extends Factory
     {
         $faker = \Faker\Factory::create();
 
-        $tipo = $faker->randomElement(['Cliente', 'Fornecedor', 'Empregado']);
+        $tipo = $faker->randomElement(['1', '2', '3']);
 
         return [
                 'nome' => fake()->name(),
