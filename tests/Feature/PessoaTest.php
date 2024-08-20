@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Pessoa;
+use Database\Seeders\PessoaSeeder;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -41,6 +42,8 @@ class PessoaTest extends TestCase
 
         $this->json('DELETE', '/api/pessoa/' . $novaPessoa->id, [])
             ->assertStatus(204);
+        $this->assertDatabaseMissing('pessoas', ['id' => $novaPessoa->id,]);
+        $this->assertModelMissing($novaPessoa);
     }
 
     public function testIndex()
@@ -63,6 +66,8 @@ class PessoaTest extends TestCase
 
     public function testShow()
     {
+        $this->seed(PessoaSeeder::class);
+ 
         $pessoa = Pessoa::factory()->create();
 
         $this->json('GET', '/api/pessoa/'.$pessoa->id, [])

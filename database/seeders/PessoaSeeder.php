@@ -22,7 +22,7 @@ class PessoaSeeder extends Seeder
             Pessoa::create([
                 'nome' => $faker->name,
                 'email' => $faker->email,
-                'tipo' => $faker->randomElements(['Cliente', 'Fornecedor', 'Empregado'])
+                'tipo' => $faker->randomElement(['1', '2', '3'])
             ]);
         }
     }
